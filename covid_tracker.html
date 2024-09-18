@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/c4f4b38242.js" crossorigin="anonymous"></script>
+    <title>Coronavirus</title>
+ <style>
+  body{
+    background: #000099;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    height: 100vh;
+    color: white;
+  }
+/* coronavirus live coding */
+.corona-title{
+  font-size: 3rem;
+  font-family: Candara;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+#country-name{
+   font-family: Candara;
+   font-size: 40px;
+   color: red;
+   text-transform: uppercase;
+   padding: 0;
+   margin: 0;
+   margin-bottom: 10px;
+}
+.coronavirus-box{
+  width: 400px;
+  height: auto;
+  text-align: center;
+  margin: auto;
+  border: 1px solid red;
+}
+.coronavirus-box h4{
+  font-family: Candara;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.coronavirus-box h5{
+  padding: 0;
+  margin: 0;
+  float: left;
+  font-family: verdana;
+  font-size: 25px;
+}
+.coronavirus-box i{
+  font-size: 35px;
+  float: right;
+  color: yellow;
+}
+.coronavirus-box .corona-box1,.corona-box2{
+ width: 100%;
+ min-height: 80px;
+}
+.corona-box1 div:nth-child(1),
+.corona-box2 div:nth-child(1),
+.corona-box1 div:nth-child(2),
+.corona-box2 div:nth-child(2){
+  width: 100%;
+  height: 100px;
+  float: left;
+  padding: 10px 25px;
+  background: #000099;
+  box-shadow: 7px 7px 15px rgba(0,0,0, .15), -7px -7px 20px rgba(0, 0, 0, 1), 0px 0px 4px rgba(0, 0, 0, .2) !important;
+}
+
+ </style>  
+</head>
+<body>
+<h1 class="corona-title">CORONAVIRUS LIVE</h1>
+      <h3 id="country-name">INDIA</h3>
+      <div class="coronavirus-box">
+        <div class="corona-box1">
+          <div>
+                 <h4>TOTAL CASES</h4>
+                 <h5 class="total_cases">0</h5>
+                 <i class="fa fa-users"></i>
+          </div>
+          <div>
+            <h4>DEATHS</h4>
+            <h5 class="deaths">0</h5>
+            <i class="fas fa-procedures"></i>
+          </div>
+        </div>
+        <br>
+        <div class="corona-box2">
+          <div>
+            <h4>RECOVERED</h4>
+            <h5 class="recovered">0</h5>
+            <i class="fas fa-child"></i>
+          </div>
+          <div>
+            <h4>NEW CASES</h4>
+            <h5 class="active">0</h5>
+            <i class="fas fa-bell"></i>
+          </div>
+    </div>
+  </div>
+  <script>
+  function number_seperate(num) {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");
+    return num_parts.join(".");
+}
+  // country name find coding
+
+    $.get("https://api.ipdata.co?api-key=853d4d3705e25dfc7775026c28731017a372c9a742d2328210ced258", function (response) {
+   var country_name = (JSON.stringify(response.country_name, null, 4)).replace(/['"]+/g, '');
+const totalCases = document.querySelector(".total_cases");
+const deaths = document.querySelector(".deaths");
+const recovered = document.querySelector(".recovered");
+const newCases = document.querySelector(".active");
+var length;
+$.get("https://api.covid19india.org/data.json",function(response){
+	console.log(response);
+var response = response;
+length = response.statewise.length;
+totalCases.innerHTML = number_seperate(response.statewise[0].confirmed);
+deaths.innerHTML = number_seperate(response.statewise[0].deaths);
+recovered.innerHTML = number_seperate(response.statewise[0].recovered);
+newCases.innerHTML = number_seperate(response.statewise[0].active);
+
+ 
+});
+}, "jsonp");
+  </script>
+</body>
+</html>
